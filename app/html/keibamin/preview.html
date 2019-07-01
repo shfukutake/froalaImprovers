@@ -1,0 +1,66 @@
+  <div class="container blogPage singleBlog" ng-controller="previewCtrl" ng-init="init()">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="contents-title" ng-bind-html="preview.title" style="margin-bottom:60px;">
+        </div>
+        <div class="contents-content" ng-bind-html="preview.contents" class="spilled" style="margin-bottom:60px;">
+        </div>
+      </div>
+      <div class="col-md-12">
+          <div class="form-group" id="input-tag">
+              <label for="example-text-input" class="col-form-label extra-title">
+                タグ登録&nbsp;<span style="color:red;">*</span>
+                &nbsp;<a href="https://faq.oshiete-keibamin.com/article/7-contentscreate002" target="_blank"><i class="fa fa-question-circle fa-blue"></i></a>
+              </label>
+              <p style="margin-bottom: 0.5rem !important;">
+                <i class="fa fa-tag"></i>
+                <span class="tag-defined" ng-click='addTag("中央競馬")'>中央競馬</span>&nbsp;
+                <span class="tag-defined" ng-click='addTag("地方競馬")'>地方競馬</span>&nbsp;
+                <span class="tag-defined" ng-click='addTag("血統")'>血統</span>&nbsp;
+                <span class="tag-defined" ng-click='addTag("回顧")'>回顧</span>&nbsp;
+                <span class="tag-defined" ng-click='addTag("馬券理論")'>馬券理論</span>&nbsp;
+                <span class="tag-defined" ng-click='addTag("POG")'>POG</span>
+              </p>
+              <div class="flex">
+                <input type="text" class="form-control" bs3-typeahead bs3-source="states" ng-model="value" bs3-afterSelect="afterSelect" />
+                <button type="button" ng-click="addTag(value)" class="btn btn-primary btn-mid" style="height:50px; margin-left:15px">タグ追加</button>
+              </div>
+              <ul style="margin-top:-15px; margin-bottom:30px;">
+                <li ng-repeat="tag in preview.tags">
+                    <span class="badge badge-success" style="margin:5px;">
+                    {{tag.name}}
+                    <i ng-click="removeTag(tag.id)" class="fa fa-close"></i>
+                  </span>
+                </li>
+              </ul>
+              <label for="example-text-input" class="col-form-label extra-title">
+                販売設定&nbsp;<span style="color:red;">*</span>
+                &nbsp;<a href="https://faq.oshiete-keibamin.com/article/5-contentscreate001" target="_blank"><i class="fa fa-question-circle fa-blue"></i></a>
+              </label>
+              <form name="form">
+                <div class="flex">
+                    <div class="form-check" style="margin:15px;" ng-show="result || createdNum == 0">
+                        <input class="radio-custom form-check-input" name="fee_free" type="radio" ng-model="priced" value="free">
+                        <label for="fee_free" ng-click="deletePrice()" class="radio-custom-label form-check-label">無料</label>
+                    </div>
+                    <div class="form-check" style="margin:15px;">
+                        <input class="radio-custom form-check-input" name="fee_priced" type="radio" ng-model="priced" value="priced" ng-click="checkPrice()">
+                        <label for="fee_priced" ng-click="checkPrice()" class="radio-custom-label form-check-label">有料</label>
+                    </div>                    
+                    <input ng-if="priced==='priced'" type="tel" ng-pattern="/^[0-9]+$/" ng-blur="checkPrice()" class="form-control fee" ng-model="preview.price" name="price" style="text-align: right;" />
+                    <span ng-if="priced==='priced'" style="margin:15px;">円</span>                                     
+                </div>
+                <p style="color:red !important;font-size: 14px !important;margin-top: -20px !important;">{{pricedError}}</p>
+                <p ng-if="!preview.tags.length" style="color:red !important;font-size: 14px !important;margin-top: -20px !important;">必ずタグを1つ以上登録してください。</p>        
+                <div class="preview-buttons">
+                    <button type="button" ui-sref="app.keibamin.edit({directory: directory, contentsid:contentsid, status:'draft'})" class="btn btn-secondary btn-mid btn-preview">戻る</button>
+                    <button type="button" ng-click="save()" ng-disabled='form.$invalid' class="btn btn-success btn-mid btn-preview">保存</button>
+                    <button type="button" ng-click="publish()" ng-if="priced==='free'" ng-disabled='form.$invalid || pricedError || !priced || !preview.tags.length' class="btn btn-primary btn-mid btn-preview">公開</button>
+                    <button type="button" ng-click="goPricedSetting()" ng-if="priced==='priced'" ng-disabled='form.$invalid || pricedError || !priced || !preview.tags.length' class="btn btn-primary btn-mid btn-preview">有料設定</button>
+                </div>
+              </form>
+          </div>
+        </div>
+    </div>
+  </div>
+  <!-- LOGIN MODAL -->

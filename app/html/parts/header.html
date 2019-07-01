@@ -1,0 +1,125 @@
+<div class="header clearfix" ng-controller="headerCtrl" ng-init="init()">
+    <div class="topBar" ng-if = "$state.current.name !== 'app.register'">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 d-none d-md-block">
+          </div>
+          <div class="col-md-6 col-12">
+            <ul class="list-inline float-right top-right" ng-if = "$state.current.name !== 'app.closed'">
+              <li class="account-login" ng-if="!isLogged"><span><a data-toggle="modal" href='#login'>ログイン</a><small>or</small><a data-toggle="modal" href='#signup'>新規登録</a></span></li>
+              <li class="searchBox" ng-if="isLogged">
+                  <div class="a-avatar" ui-sref="app.keibamin.index({directory: directory})">
+                      <img class="a-avatar-header" ng-src="{{avatar}}">
+                  </div>
+              </li>
+              <li class="searchBox" ng-if="isLogged">
+                  <a ui-sref="app.keibamin.new({directory: directory})"><i class="fa fa-edit"></i></a>
+              </li>
+              <li class="searchBox" ng-if="isLogged">
+                <a ui-sref="app.mypage.dashboard"><i class="fa fa-dashboard"></i></a>
+              </li>
+              <li class="searchBox" ng-if="isLogged && screenWidth >= 375">
+                <a ui-sref="app.settings.account"><i class="icons8-gear-filled"></i></a>
+              </li>              
+              <li class="searchBox">
+                <a ui-sref="app.taglist"><i class="fa fa-hashtag"></i></a>
+              </li>
+              <li class="searchBox">
+                  <a ui-sref="app.userSearch"><i class="icons8-find-user-male-filled"></i></a>
+              </li>
+              <li class="searchBox">
+                <a ng-click="changeClass()"><i class="fa" ng-class="fa"></i></a>
+                <ul class="dropdown-menu dropdown-menu-right" ng-class="class">
+                  <li class="searchInput">
+                    <span class="input-group">
+                      <input type="text" ng-model="query" ng-keydown="searchEnter($event, query)" class="form-control" placeholder="タグ・タイトル検索">
+                      <button type="button" ng-click="search(query)" class="input-group-addon">検索</button>
+                    </span>
+                  </li>
+                </ul>
+              </li>
+              <li class="dropdown cart-dropdown">
+                <a href="javascript:void(0)" ng-click="readNotice()" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bell"></i><span class="badge badge-circle badge-danger" ng-if="noticeNumber!==0">{{noticeNumber}}</span></a>
+                <ul class="dropdown-menu dropdown-menu-right" style="width: 270px;">
+                  <li ng-repeat="notice in notices">
+                    <a>
+                    <div class="media">
+                      <img class="a-avatar-header" ng-src="{{notice.avatar}}">
+                      <div class="media-body">
+                        <h5 class="media-heading" ng-if="notice.type==='p'">
+                          <span class="cur" ui-sref="app.keibamin.index({directory: notice.directory})">
+                            {{notice.display_name}}さん
+                          </span>が<span class="cur" ui-sref="app.keibamin.contents({directory:directory, contentsid:notice.display_id})">&quot;{{notice.title | limitTo:30}}&quot;</span>を購入しました。
+                        </h5>
+                        <h5 class="media-heading cur" ui-sref="app.mypage.payment_history" ng-if="notice.type==='t'">教えて！競馬民から入金がありました。</h5>
+                        <h5 class="media-heading" ng-if="notice.type==='u'">
+                            <span class="cur" ui-sref="app.keibamin.index({directory: notice.directory})">
+                              {{notice.display_name}}さん
+                            </span>が<span class="cur" ui-sref="app.keibamin.contents({directory:notice.directory, contentsid:notice.display_id})">&quot;{{notice.title | limitTo:30}}&quot;</span>を更新しました。
+                          </h5>
+                      </div>
+                    </div>
+                    </a>
+                  </li>
+                  <li ng-if="!notices.length">
+                    <a>
+                      <div class="media">
+                        <div class="media-body">
+                          <h5 class="media-heading">新着の通知はありません。</h5>
+                        </div>
+                      </div>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar navbar-main navbar-default navbar-expand-md" role="navigation">
+      <div class="container">
+        <a class="navbar-brand" ui-sref="app.index()" ui-sref-opts="{reload:true}">
+          <img src="app/img/logo.png" class="logo-dark" alt="Logo">
+        </a>
+        <button ng-if = "$state.current.name !== 'app.register' && $state.current.name !== 'app.closed'" class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-ex1-collapse" aria-controls="navbar-ex1-collapse" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="fa fa-bars"></span>
+        </button>
+        <div class="collapse navbar-collapse navbar-ex1-collapse" >
+          <ul class="nav navbar-nav ml-auto" ng-if="isLogged && $state.current.name !== 'app.register' && $state.current.name !== 'app.closed'">
+            <li class="nav-item dropdown nav-first" ui-sref-active="active">
+                <a ui-sref="app.keibamin.index({directory: directory})" ui-sref-opts="{reload:true}" class="dropdown-toggle nav-link">マイページTOP</a>
+            </li>
+            <li class="nav-item dropdown" ui-sref-active="active">
+              <a ui-sref="app.keibamin.new({directory: directory})" ui-sref-opts="{reload:true}" class="dropdown-toggle nav-link">コンテンツを作成する</a>
+            </li>
+            <li class="nav-item dropdown" ui-sref-active="active">
+              <a ui-sref="app.mypage.dashboard()" ui-sref-opts="{reload:true}" class="dropdown-toggle nav-link">ダッシュボード</a>
+            </li>
+            <li class="nav-item dropdown" ui-sref-active="active">
+                <a ui-sref="app.settings.account()" ui-sref-opts="{reload:true}" class="dropdown-toggle nav-link">アカウント設定</a>
+            </li>
+            <li class="nav-item dropdown" ui-sref-active="active">
+                <a ng-click="logout()" class="dropdown-toggle nav-link cur">ログアウト</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav ml-auto" ng-if="!isLogged && $state.current.name !== 'app.register'">
+            <li class="nav-item dropdown" ui-sref-active="active" ng-if = "$state.current.name !== 'app.closed'">
+                <a ui-sref="app.index" ui-sref-opts="{reload:true}" class="dropdown-toggle nav-link">ホーム</a>
+            </li>
+            <li class="nav-item dropdown" ui-sref-active="active" ng-if = "$state.current.name !== 'app.closed'">
+                <a ui-sref="app.taglist" ui-sref-opts="{reload:true}" class="dropdown-toggle nav-link">人気タグ一覧</a>
+            </li>
+            <li class="nav-item dropdown" ng-if = "$state.current.name === 'app.closed'">
+                <a class="dropdown-toggle nav-link">&nbsp;</a>
+            </li>
+          </ul>
+          <ul class="nav navbar-nav ml-auto" ng-if="$state.current.name === 'app.register' && $state.current.name !== 'app.closed'">
+              <li class="nav-item dropdown ">
+                  <a class="dropdown-toggle nav-link"></a>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+</div>

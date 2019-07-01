@@ -1,0 +1,36 @@
+<!-- header -->
+<div data-ng-include=" 'app/html/parts/header.html' " ng-if='$state.current.name !== "app.keibamin.new" && $state.current.name !== "app.keibamin.edit"  && $state.current.name !== "app.keibamin.pricedSetting"' > 
+    <!-- div class="header clearfix" -->
+</div>
+<!-- / header -->
+
+<!-- LIGHT SECTION -->
+<section class="lightSection clearfix pageHeader" ng-if='$state.current.name !== "app.index" && $state.current.name !== "app.auth" && $state.current.name !== "app.keibamin.index" && $state.current.name !== "app.keibamin.detail" && $state.current.name !== "app.keibamin.new" && $state.current.name !== "app.keibamin.edit" && $state.current.name !== "app.tag" && $state.current.name !== "app.keibamin.contents" && $state.current.name !== "app.search" && $state.current.name !== "app.closed" && $state.current.name !== "app.keibamin.pricedSetting" && $state.current.name !== "app.keibamin.published"'>
+    <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+            <div class="page-title">
+            <h2>{{$state.current.data.title}}</h2>      
+            </div>
+        </div>
+        </div>
+    </div>
+</section>
+
+<!-- START CONTENT -->
+<section class="mainContent clearfix" ui-view>
+</section>
+<!-- END CONTENT -->
+
+<!-- footer -->
+<div data-ng-include=" 'app/html/parts/footer.html' " ng-if='$state.current.name !== "app.keibamin.new" && $state.current.name !== "app.keibamin.edit" && $state.current.name !== "app.keibamin.pricedSetting"'>
+</div>
+<!-- / footer -->
+
+<!-- LOGIN MODAL -->
+<div class="modal fade login-modal" id="login" tabindex="-1" role="dialog" data-ng-include="'app/html/auth/login.html'">
+</div>
+
+<!-- SIGN UP MODAL -->
+<div class="modal fade " id="signup" tabindex="-1" role="dialog" data-ng-include="'app/html/auth/signup.html'">
+</div>

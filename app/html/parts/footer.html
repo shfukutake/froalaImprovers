@@ -1,0 +1,49 @@
+<div class="footer clearfix">
+    <div class="goTop" ng-click="goTop()">
+        <a>
+            <i class="fa fa-arrow-up"></i>
+        </a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2 col-12">
+                <div class="footerLink">
+                    <h5 ui-sref="app.terms" class="cur">利用規約</h5>
+                </div>
+            </div>
+            <div class="col-md-2 col-12">
+                <div class="footerLink">
+                    <h5 ui-sref="app.privacy" class="cur">プライバシーポリシー</h5>	
+                </div>
+            </div>
+            <div class="col-md-2 col-12" ng-if="keibamin">
+                <div class="footerLink">
+                    <h5 ui-sref="app.keibamin.scta({directory:keibamin})" class="cur">特定商取引法表記</h5>	
+                </div>
+            </div>
+            <div class="col-md-2 col-12" ng-if="!keibamin">
+                <div class="footerLink">
+                    <h5 ui-sref="app.scta" class="cur">特定商取引法表記</h5>	
+                </div>
+            </div>
+            <div class="col-md-2 col-12">
+                <div class="footerLink">
+                    <h5 class="cur">
+                        <a href="https://faq.oshiete-keibamin.com/" target="_blank">よくあるご質問</a>
+                    </h5>	
+                </div>
+            </div>
+            <div class="col-md-2 col-12">
+                <div class="footerLink">
+                    <h5 ui-sref="app.form" class="cur" ng-if="isLogged">ご連絡フォーム</h5>	
+                </div>
+            </div>
+            <div class="col-md-2 col-12">
+                <div class="footerLink">
+                    <h5 ui-sref="app.index" class="cur"><i class="fa fa-copyright"></i>&nbsp;教えて！競馬民</h5>
+                    <p style="text-align:center !important;"><a href="https://twitter.com/oKeibamin" target="_blank">&nbsp;<i class="fa fa-twitter fa-2x" style="color:#1DA1F2;">&nbsp;</i></a></p>                    	
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

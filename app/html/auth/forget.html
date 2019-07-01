@@ -1,0 +1,22 @@
+	<div class="container grid-wrapper section" ng-controller="forgetCtrl">
+		<div class="row">
+			<div class="col-12 col-lg-12 element-content">				
+				<div class="display-single_element">
+						<p class="p_resp">メールアドレスを入力し、送信を押してください。</p>
+						<p class="p_resp">パスワード再設定用のURLを通知します。</p>
+					<form  name="form" class="register_forget">
+						<div class="row">
+							<div class="form-group col-md-12">
+								<input type="email" ng-model="email" class="form-control" name="email" required placeholder="メールアドレス" style="font-size:14px;">
+								<p ng-show="form.email.$error.email" class="forgetPError">name@a.comの形式にしてください。</p>
+							</div>
+						</div>
+						<p ng-show="forgetError" class="accountErrorMsg">{{forgetError}}</p>
+						<p ng-show="forgetSuccess" class="accountSuccessMsg">メールが送信されました。</p>
+						<button type="submit" ng-click="forget()" ng-disabled='form.$invalid' class="btn btn-default btn-primary btn-block">送信</button>
+						<button type="submit" ui-sref="app.index()" class="btn btn-default btn-secondary btn-block">ホームへ戻る</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

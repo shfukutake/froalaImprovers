@@ -1,0 +1,27 @@
+<div class="modal-dialog" ng-controller="signupCtrl">
+    <div class="modal-content">
+        <div class="modal-header justify-content-center">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title">新規登録</h4>
+        </div>
+        <div class="modal-body">
+            <form name="form" novalidate="novalidate">
+                <div class="form-group">
+                    <label for="">メールアドレス</label>
+                    <input type="email" name="email" class="form-control" ng-model="user.email" required style="font-size:14px;">
+                    <p ng-show="form.email.$error.email" class="forgetPError">name@a.comの形式にしてください。</p>
+                </div>
+                <div class="form-group">
+                    <label for="">パスワード</label>
+                    <input type="password" name="password" class="form-control" ng-model="user.password" required style="font-size:14px;">
+                </div>
+                <div class="checkbox" style="margin-bottom: 5px;">
+                    <input id="terms" class="checkbox-custom form-check-input" name="terms" type="checkbox" ng-model="user.terms" required>
+                    <label for="terms" class="checkbox-custom-label form-check-label"><a ui-sref="app.terms" target="_blank" class="cur" style="color: #1da1f2; text-decoration: underline !important;">利用規約</a>に同意する</label>
+                </div>
+                <p ng-show="signupError" style="text-align: center; color:red !important; margin-bottom: 1.5rem !important; font-size: 12px !important;">{{signupError}}</p>
+                <button type="submit" ng-click="signup()" ng-disabled='form.$invalid || clicking' class="btn btn-primary btn-block">新規登録</button>
+            </form>
+        </div>
+    </div>
+</div>

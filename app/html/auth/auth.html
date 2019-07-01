@@ -1,0 +1,21 @@
+<!-- MAIN CONTENT SECTION -->
+<div class="container" ng-controller="authCtrl" ng-init="init()">          
+	<div class="row">
+		<div class="col-md-12" ng-if="successed">
+			<h2 class="publishedTitle">教えて！競馬民にご登録いただき誠にありがとうございます。</h2>
+			<div style="margin-top:30px;">次画面にリダイレクトされますのでしばらくお待ちください。&nbsp;&nbsp;画面が変わらない場合は
+				<span ui-sref="app.register" class="cur" style="text-decoration: underline;">こちら</span>
+			</div>
+		</div>
+		<div class="col-md-12" ng-if="!successed">
+				<h2 class="publishedTitle">教えて！競馬民への本登録が完了していません。</h2>
+				<div style="margin:30px 0 30px 0;">本登録メールを再送する場合は、メールアドレスを入力して送信ボタンを押してください。</div>
+				<div class="flex">
+						<input type="text" class="form-control" ng-model="email"/>
+						<button type="button" ng-click="resend(email)" class="btn btn-primary btn-mid" style="height:50px; margin-left:15px">送信</button>
+				</div>
+				<p ng-show="submitResendSuccess" class="accountSuccessMsg">本登録メールが再送されました。</p>
+				<p ng-show="submitResendError" class="accountErrorMsg">{{submitResendError}}</p>			
+		</div>
+	</div>
+</div>    

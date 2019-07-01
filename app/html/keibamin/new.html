@@ -1,0 +1,56 @@
+<div ng-controller="newCtrl" ng-init="init()">
+<form name="form" novalidate="novalidate">
+<header class="tp--header tp--header-fixed tp--header-shrink tp--header-1">
+    <div class="topBar ng-scope" ng-if="$state.current.name !== 'app.register'">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 d-none d-md-block">
+            </div>
+            <div class="col-12">
+              <ul class="list-inline float-right top-right">
+                <li class="account-login ng-scope" ng-if="isLogged">
+                  <div class="a-avatar">
+                      <img class="a-avatar-header" ng-src="{{avatar}}" ui-sref="app.keibamin.index({directory: directory})" ui-sref-opts="{reload:true}">
+                  </div>
+                </li>                
+              </ul>
+              <ul class="list-inline float-left top-left">
+                  <li ng-if="new.title || new.contents">
+                    <span style="color:white; line-height: 35px;">作成中...</span>
+                  </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="logo-new" ui-sref="app.index()" ui-sref-opts="{reload:true}"></p>
+      <div class="new-buttons">
+          <button type="button" ng-click="save()" ng-disabled='form.$invalid' class="btn btn-success btn-mid">下書き保存</button>
+          <button type="button" ng-click="preview()" ng-disabled='form.$invalid' class="btn btn-primary btn-mid">プレビュー</button>
+    </div>
+</header>
+<!-- MAIN CONTENT SECTION -->
+  <div class="container blogPage singleBlog container-new">
+    <div class="row">
+      <div class="col-md-12">
+          <b>froala ng-model's update:</b><div froala-view="new.contents"></div>
+          <form name="form">
+              <div class="form-group">
+                  <label for="example-text-input" class="col-form-label">タイトル&nbsp;<span style="color:red;">*</span></label>
+                  <input type="text" class="form-control" name="title" ng-model="new.title" required>
+              </div>
+              <div class="form-group" role="application">
+                  <label for="example-text-input" class="col-form-label">
+                    コンテンツ&nbsp;<span style="color:red;">*</span>
+                  </label>
+                  <div class="spilled">
+                    <textarea froala="froalaOptions" ng-model="new.contents" required></textarea>                  
+                  </div>
+              </div>
+          </form>
+      </div>
+    </div>
+  </div>
+</form>
+</div>
+

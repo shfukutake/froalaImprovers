@@ -1,0 +1,132 @@
+<div class="container blogPage" ng-controller="keibaminCtrl" ng-init="init()">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="keibamin_container">
+        <div class="keibamin_profile">
+          <div class="keibamin_avatar">            
+            <img class="k-avatar_img" ng-src={{user.avatar}}>            
+          </div>
+          <div class="keibamin_twitter" ng-if="user.twitter"><a href="https://twitter.com/{{user.twitter}}" target="_blank" style="font-size:16px;"><i class="fa fa-twitter fa-15x" style="margin-right: 5px;" aria-hidden="true"></i>@{{user.twitter}}</a></div>
+          <h1 class="keibamin_name">{{user.display_name}}
+            <span ng-if="user.verified">
+              &nbsp;<i class="icons8-verified-account-filled" style="color:#1da1f2;"></i>
+            </span>
+          </h1>
+        </div>
+        <div class="keibamin_bio">
+          {{user.bio}}
+        </div>
+        <ul style="margin-top:75px;">
+          <li class="ng-scope" style="display: inline;">
+              <span class="badge badge-primary ng-binding cur" style="margin:5px;">
+                <a ng-href="{{user.twitterShare}}" style="color: rgb(255, 255, 255) !important;">
+                  <i class="fa fa-twitter"></i>&nbsp;この競馬民のトップページをシェアする
+                  <script async="" src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+                </a>
+              </span>
+          </li>
+          <li class="ng-scope" style="display: inline;"></li>
+            <span class="badge badge-line ng-binding cur" style="margin:5px;">
+              <a ng-href="{{user.lineShare}}" style="color: rgb(255, 255, 255) !important;">
+                <i class="icons8-line-filled"></i>&nbsp;この競馬民のトップページを友だちに送る
+              </a>
+            </span>
+          </li>
+        </ul>
+        <div class="profileSetting" ng-if="me">
+            <button type="button" style="margin: 5px;" class="btn btn-primary btn-rounded btn-mid" ui-sref="app.keibamin.editProfile({directory: directory})">プロフィールを編集</button>
+            <button type="button" style="margin: 5px;" class="btn btn-success btn-rounded btn-mid" ui-sref="app.keibamin.new({directory: directory})">コンテンツを作成する</button>
+        </div>
+      </div>
+    </div>			
+    <div class="col-md-12" style="margin-bottom: 30px;" ng-if="me">
+      <ul class="nav nav-tabs nav-pills" role="tablist" style="margin-top:50px;">
+        <li class="nav-item">
+          <a class="nav-link active" data-toggle="tab" role="tab" ng-click="init()">作成したコンテンツ</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" role="tab" ng-click="getDraft()">下書き</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="tab" role="tab" ng-click="getPurchased()">購入したコンテンツ</a>
+        </li>
+        <!-- <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" role="tab" ng-click="getRanking('day')">神ですね！したコンテンツ</a>
+        </li> -->
+      </ul>
+    </div>
+    <div class="col-md-12" style="margin-bottom: 60px;" ng-if="!me">
+      <h2 class="keibaminHeaderTitle" style="margin-top:60px;">{{user.display_name}}さんのコンテンツ</h2>
+    </div>
+    <div class="col-md-12">
+      <p ng-if="!contents.length && me && type==='created'">作成したコンテンツはありません。</p>
+      <p ng-if="!contents.length && me && type==='draft'">下書きはありません。</p>
+      <p ng-if="!contents.length && me && type==='purchased'">購入したコンテンツはありません。</p>
+      <div class="thumbnail" ng-repeat="content in contents">
+        <h3 class="keibaminContentsTitle" ui-sref="{{content.goTo}}">{{content.title}}</h3>
+        <div class="articleInfo">
+          <div class="aI_avatar">
+              <div class="aI_avatarIcon">
+                  <div class="a-avatar">
+                      <img class="a-avatar-timeline" ng-src="{{content.avatar}}">
+                  </div>
+              </div>
+              <div class="aI_avatarName">
+                  <p class="aI_displayName">
+                    {{content.display_name}}
+                    <span ng-if="content.verified">
+                      &nbsp;<i class="icons8-verified-account-filled" style="color:#1da1f2;"></i>
+                    </span>
+                  </p>
+                  <p class="aI_displayName">
+                    <span ng-if="type!=='draft'">公開日時:</span>
+                    <span ng-if="type==='draft'">作成日時:</span>
+                    <span>{{content.created_at | amDateFormat:'YY.MM.DD HH:mm'}}&#040;</span>
+                    <span am-time-ago="content.created_at"></span><span>&#041;</span>
+                  </p>
+                  <p class="aI_displayName" ng-if="content.updated_at && type!=='draft'">
+                    <span>最終更新:</span>
+                    {{content.updated_at | amDateFormat:'YY.MM.DD HH:mm'}}&#040;</span>
+                    <span am-time-ago="content.updated_at"></span><span>&#041;</span>
+                  </p>
+                  <p class="aI_index" ng-if="me && type==='created'">
+                    <i class="icons8-eye" style="color:#fa0083;"></i>&nbsp;{{content.view}}&nbsp;&nbsp;&nbsp;&nbsp;
+                    <!-- <i class="icons8-cross-filled" style="color:#FFC300;"></i>&nbsp;987&nbsp;&nbsp;&nbsp;&nbsp; -->
+                    <!-- <i class="icons8-pouch" style="color:#154360;"></i>&nbsp;{{content.sales}}&nbsp;&nbsp;&nbsp;&nbsp; -->
+                    <!-- <i class="icons8-pray-filled"></i>&nbsp;￥3,000.-&nbsp;&nbsp;&nbsp;&nbsp; -->
+                  </p>
+              </div>
+              <div class="aI_price" ng-if="me && type!=='purchased'"><span class="badge badge-secondary cur" ui-sref="app.keibamin.edit({directory:directory, contentsid:content.display_id, status: 'published'})">編集する</span></div>                                    
+              <div class="aI_price" ng-if="!content.price && !me" ui-sref="app.keibamin.contents({directory: content.directory, contentsid: content.display_id})"><span class="badge badge-danger" style="cursor:pointer;">無料</span></div>
+              <div class="aI_price" ng-if="content.price && !content.is_purchased && !me" ui-sref="app.keibamin.contents({directory: content.directory, contentsid: content.display_id})"><span class="badge badge-primary" style="cursor:pointer;">￥{{content.price}}</span></div>
+              <div class="aI_price" ng-if="content.price && content.is_purchased && !me" ui-sref="app.keibamin.contents({directory: content.directory, contentsid: content.display_id})"><span class="badge badge-dark" style="cursor:pointer;">購入済</span></div>
+              <div class="aI_price" ng-if="content.price && me && type==='purchased'" ui-sref="app.keibamin.contents({directory: content.directory, contentsid: content.display_id})"><span class="badge badge-dark" style="cursor:pointer;">購入済&nbsp;(￥{{content.price}})</span></div>
+          </div>
+        </div>
+        <ul style="margin-bottom:30px;">
+          <li class="ng-scope" style="display: inline;">
+              <span class="badge badge-primary ng-binding cur" style="margin:5px;">
+                <a ng-href="{{content.twitterShare}}" style="color: rgb(255, 255, 255) !important;">
+                  <i class="fa fa-twitter"></i>&nbsp;シェアする
+                  <script async="" src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+                </a>
+              </span>
+              <span class="badge badge-line ng-binding cur" style="margin:5px;">
+                <a ng-href="{{content.lineShare}}" style="color: rgb(255, 255, 255) !important;">
+                  <i class="icons8-line-filled"></i>&nbsp;友だちに送る
+                </a>
+              </span>
+          </li>
+        </ul>
+        <ul style="margin-bottom:30px;">
+            <li ng-repeat="tag in content.tags" class="ng-scope" style="display: inline; cursor: pointer;">
+                <span class="badge badge-success ng-binding" style="margin:5px;" ui-sref="app.tag({tagname: tag.name})">{{tag.name}}</span>
+            </li>
+        </ul>
+        <div ng-bind-html="content.contents" class="spilled"></div>
+        <p class="seeMore" ng-if="content.seeMore && !me && type==='created'" ui-sref="app.keibamin.contents({directory: content.directory, contentsid: content.display_id})">もっとみる</p>
+        <p class="seeMore" ng-if="content.seeMore && me && type==='purchased'" ui-sref="app.keibamin.contents({directory: content.directory, contentsid: content.display_id})">もっとみる</p>
+      </div>
+    </div>
+  </div>
+</div>			

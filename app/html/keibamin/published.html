@@ -1,0 +1,29 @@
+<!-- MAIN CONTENT SECTION -->
+<div class="container" ng-controller="publishedCtrl" ng-init="init()">          
+	<div class="row">
+		<div class="col-md-12">
+			<h2 class="publishedTitle">コンテンツが公開されました！</h2>
+			<h3 class="publishedText" style="margin-top:30px;">{{contents.display_name}}さんの<span class="text-bold">{{contents.title}}</span>の存在をたくさんの人に知ってもらいましょう。</h3>
+			<div class="publishedButtons">
+				<div class="pButton">
+					<button type="button" class="btn btn-primary btn-mid btn-rounded">
+						<a ng-href="{{contents.twitterShare}}" style="color: rgb(255, 255, 255) !important;">
+							<i class="fa fa-twitter"></i>&nbsp;シェアする
+						</a>
+						<script async="" src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+					</button>
+				</div>
+				<div class="pButton">
+					<button type="button" class="btn btn-line btn-mid btn-rounded">
+							<a ng-href="{{contents.lineShare}}" style="color: rgb(255, 255, 255) !important;">
+							<i class="icons8-line-filled"></i>&nbsp;友だちに送る
+							</a>
+					</button>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-12" style="margin-top:30px;">
+		<button type="button" ui-sref="app.keibamin.index({directory: directory})" class="btn btn-default btn-secondary btn-block">マイページTOPへ</button>
+		</div>
+	</div>
+</div>    

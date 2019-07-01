@@ -1,0 +1,22 @@
+	<div class="container grid-wrapper section" ng-controller="resetCtrl">
+		<div class="row">
+			<div class="col-12 col-lg-12 element-content">				
+				<div class="display-single_element">
+						<p class="p_resp">新しいパスワードを入力し、送信を押してください。</p>
+					<form  name="form" class="register_forget">
+						<div class="row">
+							<div class="form-group col-md-12">
+								<input type="password" ng-model="password" ng-blur="checkPassword()" class="form-control" name="password" autocomplete="new-password" required placeholder="新しいパスワード" style="font-size:14px;">
+								<input type="password" ng-model="password_re" ng-blur="checkPassword()" class="form-control" name="password_re" autocomplete="new-password" required placeholder="パスワード再入力" style="font-size:14px;">
+								<p ng-show="changeError" class="forgetPError">{{changeErrorMsg}}</p>
+							</div>
+						</div>
+						<p ng-show="resetError" class="accountErrorMsg">{{resetError}}</p>
+						<p ng-show="resetSuccess" class="accountSuccessMsg">パスワードが再設定されました。</p>
+						<button type="submit" ng-click="reset()" ng-disabled='form.$invalid || changeError' class="btn btn-default btn-primary btn-block">送信</button>
+						<button type="submit" ui-sref="app.index()" class="btn btn-default btn-secondary btn-block">ホームへ戻る</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
